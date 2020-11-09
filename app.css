@@ -1,0 +1,23 @@
+ * {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+ }
+
+body, html {
+    display: grid;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    font-size: 40px;
+    align-items: baseline;
+    height: 300px;
+}
+
+.hand {
+    width: 26px;
+}
+
+.delimiter {
+    width: 12px;
+}
