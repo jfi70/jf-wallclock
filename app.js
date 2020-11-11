@@ -1,21 +1,26 @@
 
 
+const workerFrom = url => {
+    const f = (resolve, reject) => {
+        try {
+            const w = new Worker(`${url}?${Math.round(Math.random() * 10000)}`);
+            resolve(w);
+        }
+        catch (e) {
+            reject(e);
+        }
+    }
+    return new Promise(f)
+}
 
-
-const workerURL = `./worker.js?${Math.round(Math.random()*10000)}`;
-const wallClockWorker = new Worker(workerURL);
-
-
-
-wallClockWorker.onmessage = event => {
-    const t = new Date(Date.now());
-
-    const hands = [ t.getHours(), t.getMinutes(), t.getSeconds()].map( z => Array.from(`${z}`.padStart(2,0))).flat(1);
-    
-
-    Array.from(document.querySelectorAll("main > div.hand")).forEach( (d,i)=> {
-        d.innerText = hands[i];
-    })
-
-
+onload = async () => {
+    const worker = await workerFrom("./worker.js");
+    worker.onmessage = event => {
+        // console.log("padding:",event.data.wallclock.padding)
+        const t = new Date(Date.now());
+        const digits = [t.getHours(), t.getMinutes(), t.getSeconds()].map(z => Array.from(`${z}`.padStart(2, 0))).flat(1);
+        Array.from(document.querySelectorAll("main > div.segment")).forEach((d, i) => {
+            d.innerText = digits[i];
+        })
+    }
 }

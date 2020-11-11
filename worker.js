@@ -1,19 +1,16 @@
 
 
 
-const interval = 880;
+const interval = 850;
 
-function sync(i) {
-
-    const start = new Date(Date.now());
-    const s = start.getSeconds();
+(function sync(i) {
+    const s = new Date(Date.now()).getSeconds();
     setTimeout(() => {
         const b = performance.now();
         while (s === new Date(Date.now()).getSeconds()) { }
-        const d = performance.now() - b;
-        postMessage({ wall_clock: { timestamp: Date.now() , padding: d} });
+        const d = Math.round(performance.now() - b);
+        postMessage({ wallclock: { padding: d} });
         sync(i);
     }, i);
-};
+})(interval);
 
-sync(interval);
