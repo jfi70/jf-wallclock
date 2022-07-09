@@ -7,7 +7,7 @@ const interval = 850;
     const s = new Date(Date.now()).getSeconds();
     setTimeout(() => {
         const b = performance.now();
-        while (s === new Date(Date.now()).getSeconds()) { }
+        while (s === new Date(Date.now()).getSeconds()) { } // continue with the next second
         const d = Math.round(performance.now() - b);
         postMessage({ wallclock: { padding: d} });
         sync(i);
